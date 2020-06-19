@@ -263,6 +263,7 @@ class QuoteChecker(object):
 
                 # If string preferred type, check for escapes
                 if last_quote_char == self.config['good_single']:
+                    print(f"|{string_contents}|", f"|{unprefixed_string}|", start_row, start_col)
                     if not self.config['avoid_escape'] or 'r' in prefix:
                         continue
                     if (self.config['good_single'] in string_contents and
@@ -272,11 +273,18 @@ class QuoteChecker(object):
                             'line': start_row,
                             'col': start_col,
                         }
+
+                    if len(string_contents) <= 1:
+                        yield {
+                                'message': 'Q000 Remove bad quotes',
+                                'line': start_row,
+                                'col': start_col,
+                                }
+
                     continue
 
                 # If not preferred type, only allow use to avoid escapes.
                 if not self.config['good_single'] in string_contents:
-                    print(f"|{string_contents}|", f"|{unprefixed_string}|", start_row, start_col)
                     if not (len(string_contents) <= 1 and re.match(r"^'.?'$", unprefixed_string)):
                         yield {
                             'message': 'Q000 Remove bad quotes',
