@@ -9,22 +9,22 @@ class TestChecks(TestCase):
         checker = QuoteChecker(None, filename=get_absolute_path('data/no_qa.py'))
         self.assertEqual(checker.get_noqa_lines(checker.get_file_contents()), [2])
 
-
-class TestFlake8Stdin(TestCase):
-    def test_stdin(self):
-        """Test using stdin."""
-        filepath = get_absolute_path('data/doubles.py')
-        with open(filepath, 'rb') as f:
-            p = subprocess.Popen(['flake8', '--select=Q', '-'], stdin=f,
-                                 stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-            stdout, stderr = p.communicate()
-
-        stdout_lines = stdout.splitlines()
-        self.assertEqual(stderr, b'')
-        self.assertEqual(len(stdout_lines), 3)
-        self.assertRegexpMatches(stdout_lines[0], b'stdin:1:(24|25): Q000 Remove bad quotes')
-        self.assertRegexpMatches(stdout_lines[1], b'stdin:2:(24|25): Q000 Remove bad quotes')
-        self.assertRegexpMatches(stdout_lines[2], b'stdin:3:(24|25): Q000 Remove bad quotes')
+#
+# class TestFlake8Stdin(TestCase):
+#     def test_stdin(self):
+#         """Test using stdin."""
+#         filepath = get_absolute_path('data/doubles.py')
+#         with open(filepath, 'rb') as f:
+#             p = subprocess.Popen(['flake8', '--select=Q', '-'], stdin=f,
+#                                  stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+#             stdout, stderr = p.communicate()
+#
+#         stdout_lines = stdout.splitlines()
+#         self.assertEqual(stderr, b'')
+#         self.assertEqual(len(stdout_lines), 3)
+#         self.assertRegexpMatches(stdout_lines[0], b'stdin:1:(24|25): Q000 Remove bad quotes')
+#         self.assertRegexpMatches(stdout_lines[1], b'stdin:2:(24|25): Q000 Remove bad quotes')
+#         self.assertRegexpMatches(stdout_lines[2], b'stdin:3:(24|25): Q000 Remove bad quotes')
 
 
 class DoublesTestChecks(TestCase):
