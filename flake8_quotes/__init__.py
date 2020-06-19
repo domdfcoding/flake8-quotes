@@ -263,7 +263,6 @@ class QuoteChecker(object):
 
                 # If string preferred type, check for escapes
                 if last_quote_char == self.config['good_single']:
-                    print(f"|{string_contents}|", f"|{unprefixed_string}|", start_row, start_col)
                     if not self.config['avoid_escape'] or 'r' in prefix:
                         continue
                     if (self.config['good_single'] in string_contents and
