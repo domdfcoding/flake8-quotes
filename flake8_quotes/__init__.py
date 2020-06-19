@@ -276,7 +276,7 @@ class QuoteChecker(object):
 
                 # If not preferred type, only allow use to avoid escapes.
                 if not self.config['good_single'] in string_contents:
-                    print(string_contents, unprefixed_string)
+                    print(f"|{string_contents}|", f"|{unprefixed_string}|", start_row, start_col)
                     if not (len(string_contents) <= 1 and re.match(r"^'.?'$", unprefixed_string)):
                         yield {
                             'message': 'Q000 Remove bad quotes',
