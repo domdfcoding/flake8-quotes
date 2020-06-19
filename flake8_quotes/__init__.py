@@ -1,4 +1,5 @@
 import optparse
+import re
 import tokenize
 import warnings
 
@@ -275,7 +276,7 @@ class QuoteChecker(object):
 
                 # If not preferred type, only allow use to avoid escapes.
                 if not self.config['good_single'] in string_contents:
-                    if len(string_contents) > 1:
+                    if not (len(string_contents) > 1 and re.match(r"^'.*'$", string_contents)):
                         yield {
                             'message': 'Q000 Remove bad quotes',
                             'line': start_row,
