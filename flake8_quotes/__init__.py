@@ -275,11 +275,12 @@ class QuoteChecker(object):
 
                 # If not preferred type, only allow use to avoid escapes.
                 if not self.config['good_single'] in string_contents:
-                    yield {
-                        'message': 'Q000 Remove bad quotes',
-                        'line': start_row,
-                        'col': start_col,
-                    }
+                    if len(string_contents) > 1:
+                        yield {
+                            'message': 'Q000 Remove bad quotes',
+                            'line': start_row,
+                            'col': start_col,
+                        }
 
 
 class Token:
