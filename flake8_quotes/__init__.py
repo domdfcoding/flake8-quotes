@@ -273,7 +273,7 @@ class QuoteChecker(object):
                             'col': start_col,
                         }
 
-                    if len(string_contents) <= 1:
+                    if len(string_contents) < 1:
                         yield {
                                 'message': 'Q000 Remove bad quotes',
                                 'line': start_row,
